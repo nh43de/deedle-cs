@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
+  <!--Project was exported from assembly: C:\code\Github\Deedle\bin\netstandard2.0\Deedle.dll-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8C3DFEF7-B4C7-4E65-8FC5-EE89A554737A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Deedle</AssemblyName>
+    <ApplicationVersion>2.0.0.0</ApplicationVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="netstandard" />
+    <Reference Include="System.Reflection.Emit" />
+    <Reference Include="System.Reflection.Emit.ILGeneration" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Reflection" />
+    <Reference Include="System.Runtime.Extensions" />
+    <Reference Include="System.Globalization" />
+    <Reference Include="System.Reflection.Emit.Lightweight" />
+    <Reference Include="System.Reflection.Primitives" />
+    <Reference Include="System.Threading" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\Addressing.cs" />
+    <Compile Include="src\AddressModule.cs" />
+    <Compile Include="src\Deedle\Frame`2.cs" />
+    <Compile Include="src\Deedle\Series`2.cs" />
+    <Compile Include="src\Deedle\Vectors\VectorHelpers.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Csv\CsvInference.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\StructuralInference.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\NameUtils.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\Pluralizer.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\IO.cs" />
+    <Compile Include="src\Deedle\EnumerableExtensions.cs" />
+    <Compile Include="src\Deedle\SeriesBuilder`2.cs" />
+    <Compile Include="src\Deedle\SeriesBuilder`1.cs" />
+    <Compile Include="src\Deedle\SeriesExtensions.cs" />
+    <Compile Include="src\Deedle\Frame.cs" />
+    <Compile Include="src\Deedle\Stats.cs" />
+    <Compile Include="src\Deedle\KeyValue.cs" />
+    <Compile Include="src\Deedle\FrameExtensions.cs" />
+    <Compile Include="src\Deedle\SeriesStatsExtensions.cs" />
+    <Compile Include="src\Deedle\DelayedSeries.cs" />
+    <Compile Include="src\Deedle\FrameBuilder.cs" />
+    <Compile Include="src\Deedle\F_0023 Frame extensions.cs" />
+    <Compile Include="src\Deedle\FrameModule.cs" />
+    <Compile Include="src\Deedle\StatsInternal.cs" />
+    <Compile Include="src\Deedle\F_0023 Series extensions.cs" />
+    <Compile Include="src\Deedle\SeriesModule.cs" />
+    <Compile Include="src\Deedle\JoinHelpers.cs" />
+    <Compile Include="src\Deedle\Vectors\1VectorHelpers.cs" />
+    <Compile Include="src\Deedle\Common\RankedTree`1.cs" />
+    <Compile Include="src\Deedle\Common\BinomialHeap`1.cs" />
+    <Compile Include="src\Deedle\Common\BinomialHeap.cs" />
+    <Compile Include="src\Deedle\Common\Ranges`1.cs" />
+    <Compile Include="src\Deedle\Common\Ranges.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\MultipartItem.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpRequestBody.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpResponseBody.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpResponse.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpResponseWithStream.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\Http.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\TextConversions.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Csv\CsvRow.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Csv\CsvFile.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\UnicodeHelper.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\Helpers.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\CookieHandling.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpHelpers.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpEncodings.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\MimeTypes.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpContentTypes.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpStatusCodes.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpResponseHeaders.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpRequestHeaders.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\TextRuntime.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Csv\1CsvInference.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1StructuralInference.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1NameUtils.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1Pluralizer.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1IO.cs" />
+    <Compile Include="src\IAddressingScheme.cs" />
+    <Compile Include="src\IAddressOperations.cs" />
+    <Compile Include="src\LinearAddress.cs" />
+    <Compile Include="src\LinearAddressingScheme.cs" />
+    <Compile Include="src\RangeRestriction`1.cs" />
+    <Compile Include="_003CPrivateImplementationDetails$Deedle_003E.cs" />
+    <Compile Include="System\AssemblyVersionInformation.cs" />
+    <Compile Include="src\Deedle\$FrameModule.cs" />
+    <Compile Include="src\Deedle\$SeriesModule.cs" />
+    <Compile Include="src\Deedle\$JoinHelpers.cs" />
+    <Compile Include="src\Deedle\$IndexExtensions.cs" />
+    <Compile Include="src\Deedle\$Vector.cs" />
+    <Compile Include="src\Deedle\$BinomialHeap.cs" />
+    <Compile Include="src\Deedle\$Attributes.cs" />
+    <Compile Include="src\Deedle\$AssemblyInfo.cs" />
+    <Compile Include="src\Deedle\Common\ConversionKind.cs" />
+    <Compile Include="src\Deedle\Common\Lookup.cs" />
+    <Compile Include="src\Deedle\Common\Direction.cs" />
+    <Compile Include="src\Deedle\Common\Boundary.cs" />
+    <Compile Include="src\Deedle\Common\IRangeRestriction`1.cs" />
+    <Compile Include="src\Deedle\Common\IVector.cs" />
+    <Compile Include="src\Deedle\Common\IVector`1.cs" />
+    <Compile Include="src\Deedle\Common\VectorCallSite`1.cs" />
+    <Compile Include="src\Deedle\Common\IVectorLocation.cs" />
+    <Compile Include="src\Deedle\Common\ICustomLookup`1.cs" />
+    <Compile Include="src\Deedle\Common\Aggregation`1.cs" />
+    <Compile Include="src\Deedle\Common\JoinKind.cs" />
+    <Compile Include="src\Deedle\Common\UnionBehavior.cs" />
+    <Compile Include="src\Deedle\Common\ISeries`1.cs" />
+    <Compile Include="src\Deedle\Common\IFrame.cs" />
+    <Compile Include="src\Deedle\Common\IFrameOperation`1.cs" />
+    <Compile Include="src\Deedle\Common\IFsiFormattable.cs" />
+    <Compile Include="src\Deedle\Common\IRangeKeyOperations`1.cs" />
+    <Compile Include="src\Deedle\Vectors\IBinaryTransform.cs" />
+    <Compile Include="src\Deedle\Vectors\INaryTransform.cs" />
+    <Compile Include="src\Deedle\Vectors\IRowReaderTransform.cs" />
+    <Compile Include="src\Deedle\Vectors\VectorConstruction.cs" />
+    <Compile Include="src\Deedle\Vectors\IVectorBuilder.cs" />
+    <Compile Include="src\Deedle\Vectors\IVirtualVectorSourceOperation`1.cs" />
+    <Compile Include="src\Deedle\Vectors\IVirtualVectorSource.cs" />
+    <Compile Include="src\Deedle\Vectors\IVirtualVectorSource`1.cs" />
+    <Compile Include="src\Deedle\Indices\ICustomKey.cs" />
+    <Compile Include="src\Deedle\Indices\IIndex`1.cs" />
+    <Compile Include="src\Deedle\Indices\IIndexBuilder.cs" />
+    <Compile Include="src\Deedle\IDelayedIndex`1.cs" />
+    <Compile Include="src\Deedle\DelayedIndexFunction`2.cs" />
+    <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpMethod.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FSharpOptimizationData.Deedle" />
+    <EmbeddedResource Include="FSharpSignatureData.Deedle" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
