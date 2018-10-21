@@ -108,7 +108,7 @@
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1NameUtils.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1Pluralizer.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1IO.cs" />
-    <Compile Include="src\IAddressingScheme.cs" />
+    <Compile Include="src\done\IAddressingScheme.cs" />
     <Compile Include="src\IAddressOperations.cs" />
     <Compile Include="src\LinearAddress.cs" />
     <Compile Include="src\LinearAddressingScheme.cs" />
@@ -126,9 +126,9 @@
     <Compile Include="src\Deedle\Common\Direction.cs" />
     <Compile Include="src\Deedle\Common\Boundary.cs" />
     <Compile Include="src\Deedle\Common\IRangeRestriction`1.cs" />
-    <Compile Include="src\Deedle\Common\IVector.cs" />
-    <Compile Include="src\Deedle\Common\IVector`1.cs" />
-    <Compile Include="src\Deedle\Common\VectorCallSite`1.cs" />
+    <Compile Include="src\done\IVector.cs" />
+    <Compile Include="src\done\IVector`1.cs" />
+    <Compile Include="src\done\VectorCallSite`1.cs" />
     <Compile Include="src\Deedle\Common\IVectorLocation.cs" />
     <Compile Include="src\Deedle\Common\ICustomLookup`1.cs" />
     <Compile Include="src\Deedle\Common\Aggregation`1.cs" />

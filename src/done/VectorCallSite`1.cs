@@ -10,10 +10,8 @@ using System.Runtime.InteropServices;
 
 namespace Deedle
 {
-  
-  
-  public interface VectorCallSite<R>
-  {
-    R Invoke<T>([In] IVector<T> obj0);
-  }
+    public interface VectorCallSite<R>
+    {
+        R Invoke<T>([In] IVector<T> obj0);
+    }
 }
