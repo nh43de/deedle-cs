@@ -48,7 +48,7 @@ namespace Deedle
             Frame<TRowKey, TColumnKey> frame = this;
             this.indexBuilder = indexBuilder;
             this.vectorBuilder = vectorBuilder;
-            IEnumerator<OptionalValue<IVector>> enumerator = FVectorextensionscore.IVector`1get_DataSequence<IVector>(data).GetEnumerator();
+            IEnumerator<IVector> enumerator = FVectorextensionscore.IVector`1get_DataSequence<IVector>(data).GetEnumerator();
             try
             {
                 while (enumerator.MoveNext())
