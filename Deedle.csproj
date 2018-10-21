@@ -160,7 +160,7 @@
     <EmbeddedResource Include="FSharpSignatureData.Deedle" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="readme.md" />
+    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\Deedle\Common\" />

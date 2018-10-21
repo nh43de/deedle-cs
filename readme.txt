@@ -7,3 +7,9 @@
 \\u003[a-f]
 \\u004[0-9]{1,5}
 \\u007[a-f]
+
+replace
+
+\r\n\r\n
+
+\r\n  ///</summary> \r\n\r\n ///<summary> \r\n
