@@ -50,11 +50,11 @@
     <Reference Include="System.Threading" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Addressing.cs" />
-    <Compile Include="src\AddressModule.cs" />
+    <Compile Include="src\Deedle\Addressing.cs" />
+    <Compile Include="src\Deedle\AddressModule.cs" />
     <Compile Include="src\done\Frame`2.cs" />
     <Compile Include="src\Deedle\Series`2.cs" />
-    <Compile Include="src\Deedle\Vectors\VectorHelpers.cs" />
+    <Compile Include="src\Deedle\VectorHelpers.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\Csv\CsvInference.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\StructuralInference.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\NameUtils.cs" />
@@ -77,12 +77,12 @@
     <Compile Include="src\Deedle\F_0023 Series extensions.cs" />
     <Compile Include="src\Deedle\SeriesModule.cs" />
     <Compile Include="src\Deedle\JoinHelpers.cs" />
-    <Compile Include="src\Deedle\Vectors\1VectorHelpers.cs" />
-    <Compile Include="src\Deedle\Common\RankedTree`1.cs" />
-    <Compile Include="src\Deedle\Common\BinomialHeap`1.cs" />
-    <Compile Include="src\Deedle\Common\BinomialHeap.cs" />
-    <Compile Include="src\Deedle\Common\Ranges`1.cs" />
-    <Compile Include="src\Deedle\Common\Ranges.cs" />
+    <Compile Include="src\Deedle\1VectorHelpers.cs" />
+    <Compile Include="src\Deedle\RankedTree`1.cs" />
+    <Compile Include="src\Deedle\BinomialHeap`1.cs" />
+    <Compile Include="src\Deedle\BinomialHeap.cs" />
+    <Compile Include="src\Deedle\Ranges`1.cs" />
+    <Compile Include="src\Deedle\Ranges.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\MultipartItem.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpRequestBody.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpResponseBody.cs" />
@@ -109,10 +109,10 @@
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1Pluralizer.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1IO.cs" />
     <Compile Include="src\done\IAddressingScheme.cs" />
-    <Compile Include="src\IAddressOperations.cs" />
-    <Compile Include="src\LinearAddress.cs" />
-    <Compile Include="src\LinearAddressingScheme.cs" />
-    <Compile Include="src\RangeRestriction`1.cs" />
+    <Compile Include="src\done\IAddressOperations.cs" />
+    <Compile Include="src\Deedle\LinearAddress.cs" />
+    <Compile Include="src\Deedle\LinearAddressingScheme.cs" />
+    <Compile Include="src\Deedle\RangeRestriction`1.cs" />
     <Compile Include="_003CPrivateImplementationDetails$Deedle_003E.cs" />
     <Compile Include="System\AssemblyVersionInformation.cs" />
     <Compile Include="src\Deedle\$FrameModule.cs" />
@@ -121,35 +121,35 @@
     <Compile Include="src\Deedle\$BinomialHeap.cs" />
     <Compile Include="src\Deedle\$Attributes.cs" />
     <Compile Include="src\Deedle\$AssemblyInfo.cs" />
-    <Compile Include="src\Deedle\Common\ConversionKind.cs" />
-    <Compile Include="src\Deedle\Common\Lookup.cs" />
-    <Compile Include="src\Deedle\Common\Direction.cs" />
-    <Compile Include="src\Deedle\Common\Boundary.cs" />
-    <Compile Include="src\Deedle\Common\IRangeRestriction`1.cs" />
+    <Compile Include="src\Deedle\ConversionKind.cs" />
+    <Compile Include="src\done\Lookup.cs" />
+    <Compile Include="src\Deedle\Direction.cs" />
+    <Compile Include="src\Deedle\Boundary.cs" />
+    <Compile Include="src\Deedle\IRangeRestriction`1.cs" />
     <Compile Include="src\done\IVector.cs" />
     <Compile Include="src\done\IVector`1.cs" />
     <Compile Include="src\done\VectorCallSite`1.cs" />
-    <Compile Include="src\Deedle\Common\IVectorLocation.cs" />
-    <Compile Include="src\Deedle\Common\ICustomLookup`1.cs" />
-    <Compile Include="src\Deedle\Common\Aggregation`1.cs" />
-    <Compile Include="src\Deedle\Common\JoinKind.cs" />
-    <Compile Include="src\Deedle\Common\UnionBehavior.cs" />
-    <Compile Include="src\Deedle\Common\ISeries`1.cs" />
-    <Compile Include="src\Deedle\Common\IFrame.cs" />
-    <Compile Include="src\Deedle\Common\IFrameOperation`1.cs" />
+    <Compile Include="src\Deedle\IVectorLocation.cs" />
+    <Compile Include="src\Deedle\ICustomLookup`1.cs" />
+    <Compile Include="src\Deedle\Aggregation`1.cs" />
+    <Compile Include="src\Deedle\JoinKind.cs" />
+    <Compile Include="src\Deedle\UnionBehavior.cs" />
+    <Compile Include="src\Deedle\ISeries`1.cs" />
+    <Compile Include="src\Deedle\IFrame.cs" />
+    <Compile Include="src\Deedle\IFrameOperation`1.cs" />
     <Compile Include="src\done\IFsiFormattable.cs" />
-    <Compile Include="src\Deedle\Common\IRangeKeyOperations`1.cs" />
-    <Compile Include="src\Deedle\Vectors\IBinaryTransform.cs" />
-    <Compile Include="src\Deedle\Vectors\INaryTransform.cs" />
-    <Compile Include="src\Deedle\Vectors\IRowReaderTransform.cs" />
-    <Compile Include="src\Deedle\Vectors\VectorConstruction.cs" />
-    <Compile Include="src\Deedle\Vectors\IVectorBuilder.cs" />
-    <Compile Include="src\Deedle\Vectors\IVirtualVectorSourceOperation`1.cs" />
-    <Compile Include="src\Deedle\Vectors\IVirtualVectorSource.cs" />
-    <Compile Include="src\Deedle\Vectors\IVirtualVectorSource`1.cs" />
-    <Compile Include="src\Deedle\Indices\ICustomKey.cs" />
-    <Compile Include="src\Deedle\Indices\IIndex`1.cs" />
-    <Compile Include="src\Deedle\Indices\IIndexBuilder.cs" />
+    <Compile Include="src\Deedle\IRangeKeyOperations`1.cs" />
+    <Compile Include="src\Deedle\IBinaryTransform.cs" />
+    <Compile Include="src\Deedle\INaryTransform.cs" />
+    <Compile Include="src\Deedle\IRowReaderTransform.cs" />
+    <Compile Include="src\Deedle\VectorConstruction.cs" />
+    <Compile Include="src\Deedle\IVectorBuilder.cs" />
+    <Compile Include="src\Deedle\IVirtualVectorSourceOperation`1.cs" />
+    <Compile Include="src\Deedle\IVirtualVectorSource.cs" />
+    <Compile Include="src\Deedle\IVirtualVectorSource`1.cs" />
+    <Compile Include="src\Deedle\ICustomKey.cs" />
+    <Compile Include="src\done\IIndex`1.cs" />
+    <Compile Include="src\Deedle\IIndexBuilder.cs" />
     <Compile Include="src\Deedle\IDelayedIndex`1.cs" />
     <Compile Include="src\Deedle\DelayedIndexFunction`2.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpMethod.cs" />
@@ -161,6 +161,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\Deedle\Common\" />
+    <Folder Include="src\Deedle\Indices\" />
+    <Folder Include="src\Deedle\Vectors\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
