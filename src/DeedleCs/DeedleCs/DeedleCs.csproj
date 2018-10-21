@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageId>DeedleCs</PackageId>
+    <AssemblyName>DeedleCs</AssemblyName>
+    <Authors>Nathan Hollis</Authors>
+    <Description>Power Tools for In-Memory Data Processing</Description>
+    <PackageProjectUrl>https://github.com/nh43de/deedle-cs</PackageProjectUrl>
+    <PackageTags>tools;helpers</PackageTags>
+    <PackageIconUrl></PackageIconUrl>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <!--<Copyright>Copyright 2017</Copyright>-->
+    <RepositoryType>git</RepositoryType>
+    <version>1.0.0-beta1</version>
+    <RepositoryUrl>https://github.com/nh43de/DataPowerTools</RepositoryUrl>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>bin\Release\DataPowerTools.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Reflection.Emit" />
+    <Reference Include="System.Reflection.Emit.ILGeneration" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Reflection" />
+    <Reference Include="System.Runtime.Extensions" />
+    <Reference Include="System.Globalization" />
+    <Reference Include="System.Reflection.Emit.Lightweight" />
+    <Reference Include="System.Reflection.Primitives" />
+    <Reference Include="System.Threading" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="System.Reflection" Version="4.3" />
+  </ItemGroup>
+</Project>

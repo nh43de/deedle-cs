@@ -52,7 +52,7 @@
   <ItemGroup>
     <Compile Include="src\Addressing.cs" />
     <Compile Include="src\AddressModule.cs" />
-    <Compile Include="src\Deedle\Frame`2.cs" />
+    <Compile Include="src\done\Frame`2.cs" />
     <Compile Include="src\Deedle\Series`2.cs" />
     <Compile Include="src\Deedle\Vectors\VectorHelpers.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\Csv\CsvInference.cs" />
@@ -116,10 +116,8 @@
     <Compile Include="_003CPrivateImplementationDetails$Deedle_003E.cs" />
     <Compile Include="System\AssemblyVersionInformation.cs" />
     <Compile Include="src\Deedle\$FrameModule.cs" />
-    <Compile Include="src\Deedle\$SeriesModule.cs" />
     <Compile Include="src\Deedle\$JoinHelpers.cs" />
     <Compile Include="src\Deedle\$IndexExtensions.cs" />
-    <Compile Include="src\Deedle\$Vector.cs" />
     <Compile Include="src\Deedle\$BinomialHeap.cs" />
     <Compile Include="src\Deedle\$Attributes.cs" />
     <Compile Include="src\Deedle\$AssemblyInfo.cs" />
@@ -139,7 +137,7 @@
     <Compile Include="src\Deedle\Common\ISeries`1.cs" />
     <Compile Include="src\Deedle\Common\IFrame.cs" />
     <Compile Include="src\Deedle\Common\IFrameOperation`1.cs" />
-    <Compile Include="src\Deedle\Common\IFsiFormattable.cs" />
+    <Compile Include="src\done\IFsiFormattable.cs" />
     <Compile Include="src\Deedle\Common\IRangeKeyOperations`1.cs" />
     <Compile Include="src\Deedle\Vectors\IBinaryTransform.cs" />
     <Compile Include="src\Deedle\Vectors\INaryTransform.cs" />

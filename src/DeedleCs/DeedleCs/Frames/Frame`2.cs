@@ -28,7 +28,22 @@ namespace Deedle
         internal IIndex<TRowKey> rowIndex;
         internal IIndex<TColumnKey> columnIndex;
         internal IVector<IVector> data;
-        internal FSharpDelegateEvent<NotifyCollectionChangedEventHandler> frameColumnsChanged;
+
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+        //internal NotifyCollectionChangedEvent frameColumnsChanged;
+
+
+        protected void OnCollectionChanged(NotifyCollectionChangedAction action)
+        {
+            var changed = CollectionChanged;
+            if (changed == null)
+                return;
+
+            changed.Invoke(this, new NotifyCollectionChangedEventArgs(action));
+        }
+
+
 
         public Frame(IIndex<TRowKey> rowIndex, IIndex<TColumnKey> columnIndex, IVector<IVector> data, IIndexBuilder indexBuilder, IVectorBuilder vectorBuilder)
         {
@@ -66,12 +81,9 @@ namespace Deedle
 
         internal void setColumnIndex(IIndex<TColumnKey> newColumnIndex)
         {
-            this.columnIndex\u0040100 = newColumnIndex;
-            this.frameColumnsChanged.Trigger(new object[2]
-            {
-        (object) this,
-        (object) new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)
-            });
+            this.columnIndex = newColumnIndex;
+        
+            OnCollectionChanged(NotifyCollectionChangedAction.Reset);
         }
 
         internal IIndexBuilder IndexBuilder
@@ -1582,4 +1594,5 @@ namespace Deedle
       return this.IndexRows<TNewRowIndex>(column, false);
     }
   }
+}
 }
