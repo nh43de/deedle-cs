@@ -10,6 +10,14 @@ using System.Runtime.InteropServices;
 
 namespace Deedle
 {
+
+    /// <summary>
+    /// Various implementations can use different schemes for working with addresses 
+    /// (for example, address can be just a global offset, or it can be pair of `int32` values
+    /// that store partition and offset in a partition). This interface represents a specific
+    /// address range and abstracts operations that BigDeedle needs to perform on addresses
+    /// (within the specified range)
+    /// </summary>
     public interface IAddressOperations
     {
         ///<summary> 

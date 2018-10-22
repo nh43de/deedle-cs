@@ -143,13 +143,13 @@
     <Compile Include="src\Deedle\INaryTransform.cs" />
     <Compile Include="src\Deedle\IRowReaderTransform.cs" />
     <Compile Include="src\Deedle\VectorConstruction.cs" />
-    <Compile Include="src\Deedle\IVectorBuilder.cs" />
+    <Compile Include="src\done\IVectorBuilder.cs" />
     <Compile Include="src\Deedle\IVirtualVectorSourceOperation`1.cs" />
     <Compile Include="src\Deedle\IVirtualVectorSource.cs" />
     <Compile Include="src\Deedle\IVirtualVectorSource`1.cs" />
     <Compile Include="src\Deedle\ICustomKey.cs" />
     <Compile Include="src\done\IIndex`1.cs" />
-    <Compile Include="src\Deedle\IIndexBuilder.cs" />
+    <Compile Include="src\done\IIndexBuilder.cs" />
     <Compile Include="src\Deedle\IDelayedIndex`1.cs" />
     <Compile Include="src\Deedle\DelayedIndexFunction`2.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\Net\HttpMethod.cs" />
