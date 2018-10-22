@@ -142,7 +142,7 @@
     <Compile Include="src\Deedle\IBinaryTransform.cs" />
     <Compile Include="src\Deedle\INaryTransform.cs" />
     <Compile Include="src\Deedle\IRowReaderTransform.cs" />
-    <Compile Include="src\Deedle\VectorConstruction.cs" />
+    <Compile Include="src\done\VectorConstruction.cs" />
     <Compile Include="src\done\IVectorBuilder.cs" />
     <Compile Include="src\Deedle\IVirtualVectorSourceOperation`1.cs" />
     <Compile Include="src\Deedle\IVirtualVectorSource.cs" />
