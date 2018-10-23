@@ -9,6 +9,7 @@ using Deedle.Indices;
 using Deedle.Internal;
 using Deedle.Keys;
 using Deedle.Vectors;
+using DeedleCs.Frames;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -132,6 +133,41 @@ namespace Deedle
             }
         }
 
+        /// <summary>
+        /// Aligns two data frames using both column index and row index and apply the specified operation
+        /// on values of a specified type that are available in both data frames. The parameters `columnKind`,
+        /// and `rowKind` can be specified to determine how the alginment works (similarly to `Join`).
+        /// Column keys are always matched using `Lookup.Exact`, but `lookup` determines lookup for rows.
+        /// The parameter `pointwise` can be specified to determine the outcome of unmatched column.
+        ///
+        /// Once aligned, the call `df1.Zip<T>(df2, f)` applies the specifed function `f` on all `T` values
+        /// that are available in corresponding locations in both frames. For values of other types, the 
+        /// value from `df1` is returned.
+        ///
+        /// ## Parameters
+        ///  - `otherFrame` - Other frame to be aligned and zipped with the current instance
+        ///  - `columnKind` - Specifies how to align columns (inner, outer, left or right join)
+        ///  - `rowKind` - Specifies how to align rows (inner, outer, left or right join)
+        ///  - `lookup` - Specifies how to find matching value for a row (when using left or right join on rows)
+        ///    Supported values are `Lookup.Exact`, `Lookup.ExactOrSmaller` and `Lookup.ExactOrGreater`.
+        ///  - `pointwise` - Specifies how to handle columns that are not matched. Set true to make unmatched 
+        ///    column missing. Set false to left unmatched column unchanged.
+        ///  - `op` - A function that is applied to aligned values. The `Zip` operation is generic
+        ///    in the type of this function and the type of function is used to determine which 
+        ///    values in the frames are zipped and which are left unchanged.
+        ///
+        /// [category:Joining, zipping and appending]
+        /// </summary>
+        /// <typeparam name="V1"></typeparam>
+        /// <typeparam name="V2"></typeparam>
+        /// <typeparam name="V3"></typeparam>
+        /// <param name="otherFrame"></param>
+        /// <param name="columnKind"></param>
+        /// <param name="rowKind"></param>
+        /// <param name="lookup"></param>
+        /// <param name="pointwise"></param>
+        /// <param name="op"></param>
+        /// <returns></returns>
         public Frame<TRowKey, TColumnKey> Zip<V1, V2, V3>(Frame<TRowKey, TColumnKey> otherFrame, JoinKind columnKind, JoinKind rowKind, Lookup lookup, bool pointwise, Func<V1, V2, V3> op)
         {
             Tuple<IIndex<TRowKey>, VectorConstruction, VectorConstruction> joinTransformation =
@@ -139,17 +175,25 @@ namespace Deedle
 
             IIndex<TRowKey> rowIndex = joinTransformation.Item1;
             VectorConstruction f2cmd = joinTransformation.Item3;
-            VectorConstruction vectorConstruction = joinTransformation.Item2;
+            VectorConstruction vectorConstruction = joinTransformation.Item2; //f1cmd
 
-            Func<IVector, IVector> f1trans = (Func<IVector, IVector>)new Frame.f1trans(this.vectorBuilder, rowIndex.AddressingScheme, vectorConstruction);
-            Func<IVector, IVector> f2trans = (Func<IVector, IVector>)new Frame.f2trans(this.vectorBuilder, rowIndex.AddressingScheme, VectorHelpers.substitute(1, VectorConstruction.NewReturn(0)).Invoke(f2cmd));
+            //var _f1trans = VectorHelpers.transformColumn(this.vectorBuilder, rowIndex.AddressingScheme, vectorConstruction);
+
+            Func<IVector, IVector> f1trans = new FrameHelpers.f1trans(this.vectorBuilder, rowIndex.AddressingScheme, vectorConstruction).Func;
+            Func<IVector, IVector> f2trans = new FrameHelpers.f2trans(this.vectorBuilder, rowIndex.AddressingScheme, VectorHelpers.substitute(1, VectorConstruction.NewReturn(0)).Invoke(f2cmd)).Func;
 
             Series<TColumnKey, IVector> series1 = new Series<TColumnKey, IVector>(this.ColumnIndex, this.Data, this.VectorBuilder, this.IndexBuilder);
             Series<TColumnKey, IVector> otherSeries = new Series<TColumnKey, IVector>(otherFrame.ColumnIndex, otherFrame.Data, otherFrame.VectorBuilder, otherFrame.IndexBuilder);
+
             Func<IVector, OptionalValue<IVector<V1>>> asV1 = (Func<IVector, OptionalValue<IVector<V1>>>)new Frame.asV1<V1>(ConversionKind.Flexible);
             Func<IVector, OptionalValue<IVector<V2>>> asV2 = (Func<IVector, OptionalValue<IVector<V2>>>)new Frame.asV2<V2>(ConversionKind.Flexible);
+
             FSharpTypeFunc fsharpTypeFunc = (FSharpTypeFunc)new Frame.TryConvert_();
-            Series<TColumnKey, IVector> series2 = series1.Zip<IVector>(otherSeries, columnKind).Select<IVector>(new Func<KeyValuePair<TColumnKey, Tuple<IVector, IVector>>, IVector>(new Frame.newColumns<TColumnKey, TRowKey, V1, V2, V3>(this, pointwise, op, rowIndex, f2cmd, vectorConstruction, f1trans, f2trans, asV1, asV2, fsharpTypeFunc).Invoke));
+
+            Series<TColumnKey, IVector> series2 = series1.Zip<IVector>(
+                otherSeries, columnKind)
+                .Select<IVector>(new Func<KeyValuePair<TColumnKey, Tuple<IVector, IVector>>, IVector>(new Frame.newColumns<TColumnKey, TRowKey, V1, V2, V3>(this, pointwise, op, rowIndex, f2cmd, vectorConstruction, f1trans, f2trans, asV1, asV2, fsharpTypeFunc).Invoke));
+
             return new Frame<TRowKey, TColumnKey>(rowIndex, series2.Index, series2.Vector, this.indexBuilder, this.vectorBuilder);
         }
 

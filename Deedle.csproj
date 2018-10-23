@@ -53,7 +53,7 @@
     <Compile Include="src\Deedle\Addressing.cs" />
     <Compile Include="src\done\AddressModule.cs" />
     <Compile Include="src\done\Frame`2.cs" />
-    <Compile Include="src\Deedle\Series`2.cs" />
+    <Compile Include="src\done\Series`2.cs" />
     <Compile Include="src\done\VectorHelpers.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\Csv\CsvInference.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\StructuralInference.cs" />
