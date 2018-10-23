@@ -7,10 +7,20 @@
 using Deedle.Vectors;
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Deedle
 {
+    /// <summary>
+    /// A generic, typed vector. Represents mapping from addresses to values of type `T`. 
+    /// The vector provides a minimal interface that is required by series and can be
+    /// implemented in a number of ways to provide vector backed by database or an
+    /// alternative representation of data.
+    ///
+    /// [category:Vectors and indices]
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IVector<T> : IVector
     {
         /// <summary>
@@ -34,7 +44,7 @@ namespace Deedle
         /// on the vector, data may be returned as a continuous block of memory using
         /// `ReadOnlyCollection<T>` or as a lazy sequence `seq<T>`.
         /// </summary>
-        VectorData<T> Data { get; }
+        IEnumerable<T> Data { get; }
 
         /// <summary>
         /// Apply the specified function to all values stored in the vector and return
@@ -45,7 +55,7 @@ namespace Deedle
         /// <typeparam name="TNew"></typeparam>
         /// <param name="obj0"></param>
         /// <returns></returns>
-        IVector<TNew> Select<TNew>([In] FSharpFunc<IVectorLocation, FSharpFunc<OptionalValue<T>, OptionalValue<TNew>>> obj0);
+        IVector<TNew> Select<TNew>([In] Func<IVectorLocation, Func<T, TNew>> obj0);
 
         /// <summary>
         /// Create a vector whose values are converted using the specified function, but
@@ -57,6 +67,6 @@ namespace Deedle
         /// <param name="obj0"></param>
         /// <param name="obj1"></param>
         /// <returns></returns>
-        IVector<TNew> Convert<TNew>([In] FSharpFunc<T, TNew> obj0, [In] FSharpFunc<TNew, T> obj1);
+        IVector<TNew> Convert<TNew>([In] Func<T, TNew> obj0, [In] Func<TNew, T> obj1);
     }
 }

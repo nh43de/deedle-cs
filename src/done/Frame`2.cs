@@ -29,7 +29,7 @@ namespace Deedle
         internal IIndex<TColumnKey> columnIndex;
         internal IVector<IVector> data;
 
-        //internal NotifyCollectionChangedEvent frameColumnsChanged;
+        internal NotifyCollectionChangedEvent frameColumnsChanged;
 
         public Frame(IIndex<TRowKey> rowIndex, IIndex<TColumnKey> columnIndex, IVector<IVector> data, IIndexBuilder indexBuilder, IVectorBuilder vectorBuilder)
         {

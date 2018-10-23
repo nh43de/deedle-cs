@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Deedle\Addressing.cs" />
-    <Compile Include="src\Deedle\AddressModule.cs" />
+    <Compile Include="src\done\AddressModule.cs" />
     <Compile Include="src\done\Frame`2.cs" />
     <Compile Include="src\Deedle\Series`2.cs" />
     <Compile Include="src\Deedle\VectorHelpers.cs" />
@@ -110,9 +110,9 @@
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1IO.cs" />
     <Compile Include="src\done\IAddressingScheme.cs" />
     <Compile Include="src\done\IAddressOperations.cs" />
-    <Compile Include="src\Deedle\LinearAddress.cs" />
-    <Compile Include="src\Deedle\LinearAddressingScheme.cs" />
-    <Compile Include="src\Deedle\RangeRestriction`1.cs" />
+    <Compile Include="src\done\LinearAddress.cs" />
+    <Compile Include="src\done\LinearAddressingScheme.cs" />
+    <Compile Include="src\done\RangeRestriction`1.cs" />
     <Compile Include="_003CPrivateImplementationDetails$Deedle_003E.cs" />
     <Compile Include="System\AssemblyVersionInformation.cs" />
     <Compile Include="src\Deedle\$FrameModule.cs" />
@@ -125,11 +125,11 @@
     <Compile Include="src\done\Lookup.cs" />
     <Compile Include="src\Deedle\Direction.cs" />
     <Compile Include="src\Deedle\Boundary.cs" />
-    <Compile Include="src\Deedle\IRangeRestriction`1.cs" />
+    <Compile Include="src\done\IRangeRestriction`1.cs" />
     <Compile Include="src\done\IVector.cs" />
     <Compile Include="src\done\IVector`1.cs" />
     <Compile Include="src\done\VectorCallSite`1.cs" />
-    <Compile Include="src\Deedle\IVectorLocation.cs" />
+    <Compile Include="src\done\IVectorLocation.cs" />
     <Compile Include="src\Deedle\ICustomLookup`1.cs" />
     <Compile Include="src\Deedle\Aggregation`1.cs" />
     <Compile Include="src\Deedle\JoinKind.cs" />

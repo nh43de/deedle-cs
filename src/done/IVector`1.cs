@@ -11,18 +11,16 @@ using System.Runtime.InteropServices;
 
 namespace Deedle
 {
-  
-  [Serializable]
-  public interface IVector<T> : IVector
-  {
-    OptionalValue<T> GetValue([In] long obj0);
+    public interface IVector<T> : IVector
+    {
+        T GetValue([In] long obj0);
 
-    OptionalValue<T> GetValueAtLocation([In] IVectorLocation obj0);
+        T GetValueAtLocation([In] IVectorLocation obj0);
 
-    VectorData<T> Data { get; }
+        T Data { get; }
 
-    IVector<TNew> Select<TNew>([In] FSharpFunc<IVectorLocation, FSharpFunc<OptionalValue<T>, OptionalValue<TNew>>> obj0);
+        IVector<TNew> Select<TNew>([In] Func<IVectorLocation, Func<T, TNew>> obj0);
 
-    IVector<TNew> Convert<TNew>([In] FSharpFunc<T, TNew> obj0, [In] FSharpFunc<TNew, T> obj1);
-  }
+        IVector<TNew> Convert<TNew>([In] Func<T, TNew> obj0, [In] Func<TNew, T> obj1);
+    }
 }

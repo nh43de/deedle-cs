@@ -11,22 +11,22 @@ using System.Runtime.InteropServices;
 
 namespace Deedle
 {
-  
-  [Serializable]
-  public interface IVector
-  {
-    IEnumerable<OptionalValue<object>> ObjectSequence { get; }
 
-    Type ElementType { get; }
+    [Serializable]
+    public interface IVector
+    {
+        IEnumerable<object> ObjectSequence { get; }
 
-    bool SuppressPrinting { get; }
+        Type ElementType { get; }
 
-    OptionalValue<object> GetObject([In] long obj0);
+        bool SuppressPrinting { get; }
 
-    R Invoke<R>([In] VectorCallSite<R> obj0);
+        object GetObject([In] long i);
 
-    long Length { get; }
+        R Invoke<R>([In] VectorCallSite<R> obj0);
 
-    Addressing.IAddressingScheme AddressingScheme { get; }
-  }
+        long Length { get; }
+
+        Addressing.IAddressingScheme AddressingScheme { get; }
+    }
 }
