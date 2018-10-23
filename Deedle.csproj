@@ -54,7 +54,7 @@
     <Compile Include="src\done\AddressModule.cs" />
     <Compile Include="src\done\Frame`2.cs" />
     <Compile Include="src\Deedle\Series`2.cs" />
-    <Compile Include="src\Deedle\VectorHelpers.cs" />
+    <Compile Include="src\done\VectorHelpers.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\Csv\CsvInference.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\StructuralInference.cs" />
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\NameUtils.cs" />
@@ -76,7 +76,6 @@
     <Compile Include="src\Deedle\StatsInternal.cs" />
     <Compile Include="src\Deedle\F_0023 Series extensions.cs" />
     <Compile Include="src\Deedle\SeriesModule.cs" />
-    <Compile Include="src\Deedle\JoinHelpers.cs" />
     <Compile Include="src\Deedle\1VectorHelpers.cs" />
     <Compile Include="src\Deedle\RankedTree`1.cs" />
     <Compile Include="src\Deedle\BinomialHeap`1.cs" />
@@ -110,6 +109,8 @@
     <Compile Include="paket-files\fsharp\FSharp.Data\src\CommonRuntime\1IO.cs" />
     <Compile Include="src\done\IAddressingScheme.cs" />
     <Compile Include="src\done\IAddressOperations.cs" />
+    <Compile Include="src\done\JoinHelpers.cs" />
+    <Compile Include="src\done\JoinKind.cs" />
     <Compile Include="src\done\LinearAddress.cs" />
     <Compile Include="src\done\LinearAddressingScheme.cs" />
     <Compile Include="src\done\RangeRestriction`1.cs" />
@@ -132,15 +133,14 @@
     <Compile Include="src\done\IVectorLocation.cs" />
     <Compile Include="src\Deedle\ICustomLookup`1.cs" />
     <Compile Include="src\Deedle\Aggregation`1.cs" />
-    <Compile Include="src\Deedle\JoinKind.cs" />
     <Compile Include="src\Deedle\UnionBehavior.cs" />
     <Compile Include="src\done\ISeries`1.cs" />
     <Compile Include="src\done\IFrame.cs" />
     <Compile Include="src\done\IFrameOperation`1.cs" />
     <Compile Include="src\done\IFsiFormattable.cs" />
     <Compile Include="src\Deedle\IRangeKeyOperations`1.cs" />
-    <Compile Include="src\Deedle\IBinaryTransform.cs" />
-    <Compile Include="src\Deedle\INaryTransform.cs" />
+    <Compile Include="src\done\IBinaryTransform.cs" />
+    <Compile Include="src\done\INaryTransform.cs" />
     <Compile Include="src\Deedle\IRowReaderTransform.cs" />
     <Compile Include="src\done\VectorConstruction.cs" />
     <Compile Include="src\done\IVectorBuilder.cs" />

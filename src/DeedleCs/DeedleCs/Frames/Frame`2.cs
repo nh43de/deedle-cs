@@ -54,7 +54,7 @@ namespace Deedle
                 if (rowIndex.AddressingScheme.GetType() != current.AddressingScheme.GetType())
                     throw new InvalidOperationException("Row index and vectors of a frame should share addressing scheme!");
             }
-
+            
             if (columnIndex.AddressingScheme.GetType() != data.AddressingScheme.GetType())
                 throw new InvalidOperationException("Column index and data vector of a frame should share addressing scheme!");
 
@@ -134,12 +134,16 @@ namespace Deedle
 
         public Frame<TRowKey, TColumnKey> Zip<V1, V2, V3>(Frame<TRowKey, TColumnKey> otherFrame, JoinKind columnKind, JoinKind rowKind, Lookup lookup, bool pointwise, Func<V1, V2, V3> op)
         {
-            Tuple<IIndex<TRowKey>, VectorConstruction, VectorConstruction> joinTransformation = JoinHelpers.createJoinTransformation<TRowKey>(this.indexBuilder, otherFrame.IndexBuilder, rowKind, lookup, this.rowIndex, otherFrame.RowIndex, VectorConstruction.NewReturn(0), VectorConstruction.NewReturn(1));
+            Tuple<IIndex<TRowKey>, VectorConstruction, VectorConstruction> joinTransformation =
+                JoinHelpers.createJoinTransformation<TRowKey>(this.indexBuilder, otherFrame.IndexBuilder, rowKind, lookup, this.rowIndex, otherFrame.RowIndex, VectorConstruction.NewReturn(0), VectorConstruction.NewReturn(1));
+
             IIndex<TRowKey> rowIndex = joinTransformation.Item1;
             VectorConstruction f2cmd = joinTransformation.Item3;
             VectorConstruction vectorConstruction = joinTransformation.Item2;
+
             Func<IVector, IVector> f1trans = (Func<IVector, IVector>)new Frame.f1trans(this.vectorBuilder, rowIndex.AddressingScheme, vectorConstruction);
             Func<IVector, IVector> f2trans = (Func<IVector, IVector>)new Frame.f2trans(this.vectorBuilder, rowIndex.AddressingScheme, VectorHelpers.substitute(1, VectorConstruction.NewReturn(0)).Invoke(f2cmd));
+
             Series<TColumnKey, IVector> series1 = new Series<TColumnKey, IVector>(this.ColumnIndex, this.Data, this.VectorBuilder, this.IndexBuilder);
             Series<TColumnKey, IVector> otherSeries = new Series<TColumnKey, IVector>(otherFrame.ColumnIndex, otherFrame.Data, otherFrame.VectorBuilder, otherFrame.IndexBuilder);
             Func<IVector, OptionalValue<IVector<V1>>> asV1 = (Func<IVector, OptionalValue<IVector<V1>>>)new Frame.asV1<V1>(ConversionKind.Flexible);

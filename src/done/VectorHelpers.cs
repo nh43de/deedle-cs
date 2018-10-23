@@ -15,7 +15,7 @@ using System.Runtime.CompilerServices;
 
 namespace StartupCodeDeedle.Deedle
 {
-    internal static class VectorHelpers
+    internal static partial class VectorHelpers
     {
         internal static readonly IntPtr doubleCode;
 
