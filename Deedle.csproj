@@ -134,9 +134,9 @@
     <Compile Include="src\Deedle\Aggregation`1.cs" />
     <Compile Include="src\Deedle\JoinKind.cs" />
     <Compile Include="src\Deedle\UnionBehavior.cs" />
-    <Compile Include="src\Deedle\ISeries`1.cs" />
-    <Compile Include="src\Deedle\IFrame.cs" />
-    <Compile Include="src\Deedle\IFrameOperation`1.cs" />
+    <Compile Include="src\done\ISeries`1.cs" />
+    <Compile Include="src\done\IFrame.cs" />
+    <Compile Include="src\done\IFrameOperation`1.cs" />
     <Compile Include="src\done\IFsiFormattable.cs" />
     <Compile Include="src\Deedle\IRangeKeyOperations`1.cs" />
     <Compile Include="src\Deedle\IBinaryTransform.cs" />

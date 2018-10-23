@@ -14,11 +14,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Dynamic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 namespace Deedle
 {
+
     [Serializable]
     public class Frame<TRowKey, TColumnKey> : IDynamicMetaObjectProvider, INotifyCollectionChanged, IFsiFormattable, IFrame
     {
@@ -213,7 +215,7 @@ namespace Deedle
         {
             Frame<TRowKey, TColumnKey>[] frameArray1 = (Frame<TRowKey, TColumnKey>[])ArrayModule.Append<Frame<TRowKey, TColumnKey>>((M0[])new Frame<TRowKey, TColumnKey>[1]
             {
-        this
+                this
             }, (M0[])otherFrames);
             Tuple<IIndex<TRowKey>, VectorConstruction> tuple1 = this.indexBuilder.Merge<TRowKey>((FSharpList<Tuple<IIndex<TRowKey>, VectorConstruction>>)ListModule.OfSeq<Tuple<IIndex<TRowKey>, VectorConstruction>>((IEnumerable<M0>)SeqModule.MapIndexed<Frame<TRowKey, TColumnKey>, Tuple<IIndex<TRowKey>, VectorConstruction>>((Func<int, Func<M0, M1>>)new Frame.constrs<TRowKey, TColumnKey>(), (IEnumerable<M0>)frameArray1)), VectorHelpers.NaryTransform.AtMostOne);
             VectorConstruction rowCmd = tuple1.Item2;
@@ -235,13 +237,7 @@ namespace Deedle
             return new Frame<TRowKey, TColumnKey>(index1, columnIndex, data, this.indexBuilder, this.vectorBuilder);
         }
 
-        public bool IsEmpty
-        {
-            get
-            {
-                return SeqModule.IsEmpty<KeyValuePair<TRowKey, long>>((IEnumerable<M0>)this.rowIndex.Mappings);
-            }
-        }
+        public bool IsEmpty => this.rowIndex.Mappings.Any() == false;
 
         public IEnumerable<TRowKey> RowKeys
         {
@@ -401,13 +397,35 @@ namespace Deedle
             this.AddColumn<object>(column, series, Lookup.Exact);
         }
 
+        /// <summary>
+        /// Mutates the data frame by adding an additional data series
+        /// as a new column with the specified column key. The sequence is
+        /// aligned to the data frame based on ordering. If it is longer, it is
+        /// trimmed and if it is shorter, missing values will be added.
+        /// A parameter `lookup` can be used to specify how to find a value in the
+        /// added series (if the sequence contains invalid values like `null` or `NaN`). 
+        ///
+        /// ## Parameters
+        ///  - `column` - A key (or name) for the newly added column
+        ///  - `series` - A sequence of values to be added
+        ///  - `lookup` - Specify how to find value in the added series (look for 
+        ///    nearest available value with the smaller/greater key).
+        ///
+        /// [category:Series operations]
+        /// </summary>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="column"></param>
+        /// <param name="series"></param>
+        /// <param name="lookup"></param>
         public void AddColumn<V>(TColumnKey column, IEnumerable<V> series, Lookup lookup)
         {
             if (this.isEmpty)
             {
-                if (!LanguagePrimitives.HashCompare.GenericEqualityIntrinsic<Type>((M0)typeof(TRowKey), (M0)typeof(int)))
+                if (!LanguagePrimitives.HashCompare.GenericEqualityIntrinsic<Type>(typeof(TRowKey), typeof(int)))
                     throw new InvalidOperationException("Adding data sequence to an empty frame with non-integer columns is not supported.");
+
                 Series<TRowKey, V> series1 = (Series<TRowKey, V>)LanguagePrimitives.IntrinsicFunctions.UnboxGeneric<Series<TRowKey, V>>((object)FSeriesextensions.Series.ofValues<V>(series));
+
                 this.AddColumn<object>(column, (ISeries<TRowKey>)series1, lookup);
             }
             else
@@ -429,24 +447,47 @@ namespace Deedle
             }
         }
 
+
+
+        /// <summary>
+        /// Mutates the data frame by adding an additional data series
+        /// as a new column with the specified column key. The operation 
+        /// uses left join and aligns new series to the existing frame keys.
+        /// A parameter `lookup` can be used to specify how to find a value in the
+        /// added series (if an exact key is not available). The `lookup` parameter
+        /// can only be used with ordered indices.
+        ///
+        /// ## Parameters
+        ///  - `series` - A data series to be added (the row key type has to match)
+        ///  - `column` - A key (or name) for the newly added column
+        ///  - `lookup` - Specify how to find value in the added series (look for 
+        ///    nearest available value with the smaller/greater key).
+        ///
+        /// [category:Series operations]
+        /// </summary>
+        /// <typeparam name="V"></typeparam>
+        /// <param name="column"></param>
+        /// <param name="series"></param>
+        /// <param name="lookup"></param>
         public void AddColumn<V>(TColumnKey column, ISeries<TRowKey> series, Lookup lookup)
         {
             if (this.isEmpty)
             {
                 this.rowIndex = series.Index;
                 this.isEmpty = false;
-                this.data = FVectorBuilderimplementation.VectorBuilder.Instance.Create<IVector>((IVector[])ArrayModule.OfSeq<IVector>((IEnumerable<M0>)FSharpList<IVector>.Cons(series.Vector, FSharpList<IVector>.get_Empty())));
-                this.setColumnIndex(FIndexextensions.Index.ofKeys<TColumnKey>(new TColumnKey[1]
-        {
-          column
-        }));
+
+                this.data = this.VectorExensions.ofValues(series.Vector);
+
+                //this.data = FVectorBuilderimplementation.VectorBuilder.Instance.Create<IVector>((IVector[])ArrayModule.OfSeq<IVector>((IEnumerable<M0>)IEnumerable<IVector>.Cons(series.Vector, IEnumerable<IVector>.get_Empty())));
+
+                this.setColumnIndex(FIndexextensions.Index.ofKeys<TColumnKey>(new TColumnKey[1] { column }));
             }
             else
             {
                 Frame<TRowKey, TColumnKey> frame = this.Join(new Frame<TRowKey, TColumnKey>(series.Index, FIndexextensions.Index.ofUnorderedKeys<TColumnKey>(new TColumnKey[1]
                 {
           column
-                }), FVectorBuilderimplementation.VectorBuilder.Instance.Create<IVector>((IVector[])ArrayModule.OfSeq<IVector>((IEnumerable<M0>)FSharpList<IVector>.Cons(series.Vector, FSharpList<IVector>.get_Empty()))), series.Index.Builder, series.VectorBuilder), JoinKind.Left, lookup);
+                }), FVectorBuilderimplementation.VectorBuilder.Instance.Create<IVector>((IVector[])ArrayModule.OfSeq<IVector>((IEnumerable<M0>)IEnumerable<IVector>.Cons(series.Vector, IEnumerable<IVector>.get_Empty()))), series.Index.Builder, series.VectorBuilder), JoinKind.Left, lookup);
                 this.data = frame.Data;
                 this.setColumnIndex(frame.ColumnIndex);
             }
@@ -1581,6 +1622,8 @@ namespace Deedle
         {
             return this.IndexRows<TNewRowIndex>(column, false);
         }
+
+
     }
 }
 }

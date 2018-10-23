@@ -17,7 +17,6 @@ namespace StartupCodeDeedle.Deedle
 {
     internal static class VectorHelpers
     {
-
         internal static readonly IntPtr doubleCode;
 
         internal static readonly IntPtr intCode;
