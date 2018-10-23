@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace Deedle
             this.vectorBuilder = vectorBuilder;
             this.indexBuilder = indexBuilder;
 
-            if (!LanguagePrimitives.HashCompare.GenericEqualityIntrinsic<Addressing.IAddressingScheme>((M0)this.index.AddressingScheme, (M0)this.vector.AddressingScheme))
+            if (!LanguagePrimitives.HashCompare.GenericEqualityIntrinsic<Addressing.IAddressingScheme>(this.index.AddressingScheme, this.vector.AddressingScheme))
                 throw new InvalidOperationException("Index and vector of a series should share addressing scheme!");
 
             if ((!((object)this.index is LinearIndex<K>) ? 0 : ((object)this.vector is Deedle.Vectors.ArrayVector.ArrayVector<V> ? 1 : 0)) != 0 && this.index.KeyCount != this.vector.Length)
@@ -70,7 +71,7 @@ namespace Deedle
             }
         }
 
-        public IVector<V> Vector
+        IVector ISeries<K>.Vector
         {
             get
             {
@@ -78,29 +79,37 @@ namespace Deedle
             }
         }
 
+        public IVector<V> Vector
+        {
+            get
+            {
+                return this.vector;
+            }
+        }
+        
         public IEnumerable<K> Keys
         {
             get
             {
-                return (IEnumerable<K>)new Series.get_Keys<K, V>(this, new KeyValuePair<K, long>(), (IEnumerator<KeyValuePair<K, long>>)null, 0, default(K));
+                return index.Mappings.Select(kvp => kvp.Key);
             }
         }
 
         public IEnumerable<V> Values
         {
             get
-            {
-                return (IEnumerable<V>)new Series.get_Values<V, K>((Func<long, Func<KeyValuePair<K, long>, FSharpOption<V>>>)new Series.get_Values<K, V>(this), this.index.Mappings, (FSharpRef<long>)null, new KeyValuePair<K, long>(), (FSharpOption<V>)null, (FSharpOption<V>)null, (IEnumerator<KeyValuePair<K, long>>)null, 0, default(V));
+            {                
+                return index.Mappings.Select((kvp, idx) => this.vector.GetValueAtLocation(new KnownLocation(kvp.Value, idx)));
             }
         }
 
-        public IEnumerable<V> ValuesAll
-        {
-            get
-            {
-                return (IEnumerable<V>)new Series.get_ValuesAll<V, K>((Func<long, Func<KeyValuePair<K, long>, V>>)new Series.get_ValuesAll<K, V>(this), this.index.Mappings, (FSharpRef<long>)null, new KeyValuePair<K, long>(), (IEnumerator<KeyValuePair<K, long>>)null, 0, default(V));
-            }
-        }
+        //public IEnumerable<V> ValuesAll
+        //{
+        //    get
+        //    {
+        //        return (IEnumerable<V>)new Series.get_ValuesAll<V, K>((Func<long, Func<KeyValuePair<K, long>, V>>)new Series.get_ValuesAll<K, V>(this), this.index.Mappings, (FSharpRef<long>)null, new KeyValuePair<K, long>(), (IEnumerator<KeyValuePair<K, long>>)null, 0, default(V));
+        //    }
+        //}
 
         public IEnumerable<KeyValuePair<K, V>> Observations
         {
@@ -188,7 +197,7 @@ namespace Deedle
             return new Series<K, V>(index, vector, this.vectorBuilder, this.indexBuilder);
         }
 
-        public Series<K, V> GetSubrange(FSharpOption<Tuple<K, BoundaryBehavior>> lo, FSharpOption<Tuple<K, BoundaryBehavior>> hi)
+        public Series<K, V> GetSubrange(Tuple<K, BoundaryBehavior> lo, Tuple<K, BoundaryBehavior> hi)
         {
             Tuple<IIndex<K>, VectorConstruction> range = this.indexBuilder.GetRange<K>(new Tuple<IIndex<K>, VectorConstruction>(this.index, VectorConstruction.NewReturn(0)), new Tuple<FSharpOption<Tuple<K, BoundaryBehavior>>, FSharpOption<Tuple<K, BoundaryBehavior>>>(lo, hi));
             VectorConstruction vectorConstruction = range.Item2;
@@ -201,7 +210,7 @@ namespace Deedle
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Series<K, V> GetSlice(FSharpOption<K> lo, FSharpOption<K> hi)
+        public Series<K, V> GetSlice(K lo, K hi)
         {
             FSharpTypeFunc fsharpTypeFunc = (FSharpTypeFunc)new Series.inclusive();
             return this.GetSubrange(((Func<FSharpOption<K>, FSharpOption<Tuple<K, BoundaryBehavior>>>)fsharpTypeFunc.Specialize<K>()).Invoke(lo), ((Func<FSharpOption<K>, FSharpOption<Tuple<K, BoundaryBehavior>>>)fsharpTypeFunc.Specialize<K>()).Invoke(hi));
@@ -1220,105 +1229,6 @@ namespace Deedle
             return new Series<K, Decimal>(index, vector, series1.VectorBuilder, series1.IndexBuilder);
         }
 
-        public static Series<K, double> Acos(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Acos<K>((Func<double, double>)new Series.Acos()).Invoke));
-        }
-
-        public static Series<K, double> Asin(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Asin<K>((Func<double, double>)new Series.Asin()).Invoke));
-        }
-
-        public static Series<K, double> Atan(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Atan<K>((Func<double, double>)new Series.Atan()).Invoke));
-        }
-
-        public static Series<K, double> Sin(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Sin<K>((Func<double, double>)new Series.Sin()).Invoke));
-        }
-
-        public static Series<K, double> Sinh(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Sinh<K>((Func<double, double>)new Series.Sinh()).Invoke));
-        }
-
-        public static Series<K, double> Cos(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Cos<K>((Func<double, double>)new Series.Cos()).Invoke));
-        }
-
-        public static Series<K, double> Cosh(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Cosh<K>((Func<double, double>)new Series.Cosh()).Invoke));
-        }
-
-        public static Series<K, double> Tan(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Tan<K>((Func<double, double>)new Series.Tan()).Invoke));
-        }
-
-        public static Series<K, double> Tanh(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Tanh<K>((Func<double, double>)new Series.Tanh()).Invoke));
-        }
-
-        public static Series<K, double> Abs(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Abs<K>((Func<double, double>)new Series.Abs()).Invoke));
-        }
-
-        public static Series<K, int> Abs(Series<K, int> series)
-        {
-            return series.Select<int>(new Func<KeyValuePair<K, int>, int>(new Series.Abs<K>((Func<int, int>)new Series.Abs()).Invoke));
-        }
-
-        public static Series<K, double> Ceiling(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Ceiling<K>((Func<double, double>)new Series.Ceiling()).Invoke));
-        }
-
-        public static Series<K, double> Exp(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Exp<K>((Func<double, double>)new Series.Exp()).Invoke));
-        }
-
-        public static Series<K, double> Floor(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Floor<K>((Func<double, double>)new Series.Floor()).Invoke));
-        }
-
-        public static Series<K, double> Truncate(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Truncate<K>((Func<double, double>)new Series.Truncate()).Invoke));
-        }
-
-        public static Series<K, double> Log(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Log<K>((Func<double, double>)new Series.Log()).Invoke));
-        }
-
-        public static Series<K, double> Log10(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Log10<K>((Func<double, double>)new Series.Log10()).Invoke));
-        }
-
-        public static Series<K, double> Round(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Round<K>((Func<double, double>)new Series.Round()).Invoke));
-        }
-
-        public static Series<K, int> Sign(Series<K, double> series)
-        {
-            return series.Select<int>(new Func<KeyValuePair<K, double>, int>(new Series.Sign<K>((Func<double, int>)new Series.Sign()).Invoke));
-        }
-
-        public static Series<K, double> Sqrt(Series<K, double> series)
-        {
-            return series.Select<double>(new Func<KeyValuePair<K, double>, double>(new Series.Sqrt<K>((Func<double, double>)new Series.Sqrt()).Invoke));
-        }
 
         public override bool Equals(object another)
         {

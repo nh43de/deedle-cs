@@ -1587,7 +1587,7 @@ namespace Deedle
         [Serializable]
 
         [StructLayout(LayoutKind.Auto, CharSet = CharSet.Auto)]
-        internal sealed class tryConvertType<R> : VectorCallSite<OptionalValue<IVector<R>>>
+        internal sealed class tryConvertType<R> : VectorCallSite<IVector<R>>
         {
             public ConversionKind conversionKind;
 
@@ -1622,10 +1622,10 @@ namespace Deedle
         {
             internal long rowAddress;
             internal IVector<IVector> data;
-            internal FSharpFunc<long, long> colAddressAt;
+            internal Func<long, long> colAddressAt;
             internal IVectorBuilder builder;
 
-            public RowReaderVector(IVector<IVector> data, IVectorBuilder builder, long rowAddress, FSharpFunc<long, long> colAddressAt)
+            public RowReaderVector(IVector<IVector> data, IVectorBuilder builder, long rowAddress, Func<long, long> colAddressAt)
             {
                 VectorHelpers.RowReaderVector<T> rowReaderVector = this;
                 this.data = data;

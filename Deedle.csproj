@@ -122,7 +122,7 @@
     <Compile Include="src\Deedle\$BinomialHeap.cs" />
     <Compile Include="src\Deedle\$Attributes.cs" />
     <Compile Include="src\Deedle\$AssemblyInfo.cs" />
-    <Compile Include="src\Deedle\ConversionKind.cs" />
+    <Compile Include="src\done\ConversionKind.cs" />
     <Compile Include="src\done\Lookup.cs" />
     <Compile Include="src\Deedle\Direction.cs" />
     <Compile Include="src\Deedle\Boundary.cs" />
