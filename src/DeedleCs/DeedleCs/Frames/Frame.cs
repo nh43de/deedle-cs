@@ -32,7 +32,7 @@ namespace DeedleCs.Frames
 
             public Func<IVector, IVector> Func { get; }
         }
-
+               
         internal sealed class f2trans
         {
             public IVectorBuilder vectorBuilder;
@@ -55,6 +55,22 @@ namespace DeedleCs.Frames
             }
 
             public Func<IVector, IVector> Func { get; }
+        }
+
+        [Serializable]
+        internal sealed class RenameColumns<TColumnKey> : Func<TColumnKey, TColumnKey>
+        {
+            public Func<TColumnKey, TColumnKey> objectArg;
+
+            internal RenameColumns(Func<TColumnKey, TColumnKey> objectArg)
+            {
+                this.objectArg = objectArg;
+            }
+
+            public virtual TColumnKey Invoke(TColumnKey arg00)
+            {
+                return this.objectArg(arg00);
+            }
         }
 
     }

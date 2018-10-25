@@ -335,7 +335,7 @@ namespace Deedle
             return new KeyValuePair<K, V>(key, optionalValue.Value);
         }
 
-        public OptionalValue<V> TryGet(K key)
+        public Nullable<V> TryGet(K key)
         {
             long num = this.Index.Locate(key);
             if (num == Addressing.AddressModule.invalid)
@@ -738,8 +738,19 @@ namespace Deedle
 
         public Series<TNewKey, V> IndexWith<TNewKey>(IEnumerable<TNewKey> keys)
         {
-            IIndex<TNewKey> index = this.indexBuilder.Create<TNewKey>(keys, (FSharpOption<bool>)null);
-            VectorConstruction vectorConstruction = index.KeyCount != (long)this.KeyCount ? (index.KeyCount <= (long)this.KeyCount ? VectorConstruction.NewGetRange(VectorConstruction.NewReturn(0), RangeRestriction<long>.NewFixed(this.Index.AddressAt(0L), this.Index.AddressAt(index.KeyCount - 1L))) : VectorConstruction.NewAppend(VectorConstruction.NewReturn(0), VectorConstruction.NewEmpty(index.KeyCount - (long)this.KeyCount))) : VectorConstruction.NewReturn(0);
+            IIndex<TNewKey> index = this.indexBuilder.Create<TNewKey>(keys, (bool?)null);
+            VectorConstruction vectorConstruction = 
+                index.KeyCount != (long)this.KeyCount 
+                ? (index.KeyCount <= (long)this.KeyCount 
+                    ? VectorConstruction.NewGetRange(
+                        VectorConstruction.NewReturn(0), 
+                        RangeRestriction<long>.NewFixed(
+                            this.Index.AddressAt(0L),
+                            this.Index.AddressAt(index.KeyCount - 1L))) 
+                    : VectorConstruction.NewAppend(
+                        VectorConstruction.NewReturn(0), 
+                        VectorConstruction.NewEmpty(index.KeyCount - (long)this.KeyCount))) 
+                : VectorConstruction.NewReturn(0);
             IVector<V> vector = this.vectorBuilder.Build<V>(index.AddressingScheme, vectorConstruction, new IVector<V>[1]
             {
         this.vector

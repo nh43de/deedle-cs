@@ -185,8 +185,8 @@ namespace Deedle
             Series<TColumnKey, IVector> series1 = new Series<TColumnKey, IVector>(this.ColumnIndex, this.Data, this.VectorBuilder, this.IndexBuilder);
             Series<TColumnKey, IVector> otherSeries = new Series<TColumnKey, IVector>(otherFrame.ColumnIndex, otherFrame.Data, otherFrame.VectorBuilder, otherFrame.IndexBuilder);
 
-            Func<IVector, OptionalValue<IVector<V1>>> asV1 = (Func<IVector, OptionalValue<IVector<V1>>>)new Frame.asV1<V1>(ConversionKind.Flexible);
-            Func<IVector, OptionalValue<IVector<V2>>> asV2 = (Func<IVector, OptionalValue<IVector<V2>>>)new Frame.asV2<V2>(ConversionKind.Flexible);
+            Func<IVector, IVector<V1>> asV1 = (Func<IVector, IVector<V1>>)new Frame.asV1<V1>(ConversionKind.Flexible);
+            Func<IVector, IVector<V2>> asV2 = (Func<IVector, IVector<V2>>)new Frame.asV2<V2>(ConversionKind.Flexible);
 
             FSharpTypeFunc fsharpTypeFunc = (FSharpTypeFunc)new Frame.TryConvert_();
 
@@ -642,7 +642,7 @@ namespace Deedle
             return this.GetAllColumns<R>(ConversionKind.Flexible);
         }
 
-        public OptionalValue<Series<TRowKey, R>> TryGetColumn<R>(TColumnKey column, Lookup lookup)
+        public Series<TRowKey, R> TryGetColumn<R>(TColumnKey column, Lookup lookup)
         {
             IVector colVector = this.tryGetColVector(column, lookup, (Func<long, bool>)new Frame.TryGetColumn());
             Func<IVector, Series<TRowKey, R>> Func = (Func<IVector, Series<TRowKey, R>>)new Frame.TryGetColumn<TRowKey, R, TColumnKey>(this);
@@ -652,7 +652,7 @@ namespace Deedle
             return OptionalValue<Series<TRowKey, R>>.Missing;
         }
 
-        public OptionalValue<KeyValuePair<TColumnKey, Series<TRowKey, R>>> TryGetColumnObservation<R>(TColumnKey column, Lookup lookup)
+        public KeyValuePair<TColumnKey, Series<TRowKey, R>> TryGetColumnObservation<R>(TColumnKey column, Lookup lookup)
         {
             OptionalValue<Tuple<TColumnKey, long>> columnIndex = this.columnIndex.Lookup(column, lookup, (Func<long, bool>)new Frame.columnIndex());
             if (!columnIndex.HasValue)
@@ -679,28 +679,20 @@ namespace Deedle
 
         public void RenameColumn(TColumnKey oldKey, TColumnKey newKey)
         {
-            ReadOnlyCollection<TColumnKey> keys = this.columnIndex.Keys;
-            this.setColumnIndex(FIndexextensions.Index.ofKeys<TColumnKey>(System.Array.AsReadOnly<TColumnKey>((TColumnKey[])ArrayModule.OfSeq<TColumnKey>((IEnumerable<M0>)SeqModule.Map<TColumnKey, TColumnKey>((Func<M0, M1>)new Frame.newKeys<TColumnKey>(oldKey, newKey), (IEnumerable<M0>)keys)))));
+            var keys = this.columnIndex.Keys;
+
+            //var newKeys = keys.Select(k => k == oldKey ? newKey : k).ToArray();
+
+            //this.setColumnIndex(Index.ofKeys(Array.AsReadOnly(newKeys)));
+            
+            this.setColumnIndex(Index.ofKeys(Array.AsReadOnly(ArrayModule.OfSeq<TColumnKey>(SeqModule.Map<TColumnKey, TColumnKey>(new Frame.newKeys<TColumnKey>(oldKey, newKey), (IEnumerable<M0>)keys)))));
         }
 
         public void RenameColumns(Func<TColumnKey, TColumnKey> mapping)
         {
-            Func<TColumnKey, TColumnKey> Func = (Func<TColumnKey, TColumnKey>)new Frame.RenameColumns<TColumnKey>(mapping);
-            ReadOnlyCollection<TColumnKey> keys = this.columnIndex.Keys;
-            TColumnKey[] array = (TColumnKey[])ArrayModule.ZeroCreate<TColumnKey>(keys.Count);
-            Frame<TRowKey, TColumnKey> frame = this;
-            int index = 0;
-            int num = keys.Count - 1;
-            if (num >= index)
-            {
-                do
-                {
-                    array[index] = Func.Invoke(keys[index]);
-                    ++index;
-                }
-                while (index != num + 1);
-            }
-            frame.setColumnIndex(FIndexextensions.Index.ofKeys<TColumnKey>(System.Array.AsReadOnly<TColumnKey>(array)));
+            var array = this.columnIndex.Keys.Select(key => mapping.Invoke(key)).ToArray();
+
+            this.setColumnIndex(Index.ofKeys(Array.AsReadOnly(array)));
         }
 
         [SpecialName]

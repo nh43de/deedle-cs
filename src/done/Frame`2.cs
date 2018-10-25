@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Dynamic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
@@ -59,7 +60,6 @@ namespace Deedle
             this.frameColumnsChanged = new FSharpDelegateEvent<NotifyCollectionChangedEventHandler>();
         }
 
-        [CompilationArgumentCounts(new int[] { 1, 1, 1, 1 })]
         internal static Frame<b, c> FromColumnsNonGeneric<a, b, c>(IIndexBuilder indexBuilder, IVectorBuilder vectorBuilder, FSharpFunc<a, ISeries<b>> seriesConv, Series<c, a> nested)
         {
             return Frame<TRowKey, TColumnKey>.fromColumnsNonGeneric<a, b, c>(indexBuilder, vectorBuilder, seriesConv, nested);
@@ -70,8 +70,8 @@ namespace Deedle
             this.columnIndex = newColumnIndex;
             this.frameColumnsChanged.Trigger(new object[2]
             {
-        (object) this,
-        (object) new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)
+                (object) this,
+                (object) new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)
             });
         }
 
@@ -166,8 +166,8 @@ namespace Deedle
             IVector<IVector> vector2 = FVectorextensionscore.IVector`1Select<IVector, IVector>(otherFrame.Data, (FSharpFunc<IVector, IVector>)new Frame.newOtherData(otherFrame.VectorBuilder, rowIndex.AddressingScheme, rowCmd2));
             IVector<IVector> data = this.vectorBuilder.Build<IVector>(columnIndex.AddressingScheme, vectorConstruction, new IVector<IVector>[2]
             {
-        vector1,
-        vector2
+                vector1,
+                vector2
             });
             return new Frame<TRowKey, TColumnKey>(rowIndex, columnIndex, data, this.indexBuilder, this.vectorBuilder);
         }
@@ -201,7 +201,7 @@ namespace Deedle
         {
             return this.Merge(new Frame<TRowKey, TColumnKey>[1]
             {
-        otherFrame
+                otherFrame
             });
         }
 
@@ -212,10 +212,10 @@ namespace Deedle
 
         public Frame<TRowKey, TColumnKey> Merge(params Frame<TRowKey, TColumnKey>[] otherFrames)
         {
-            Frame<TRowKey, TColumnKey>[] frameArray1 = (Frame<TRowKey, TColumnKey>[])ArrayModule.Append<Frame<TRowKey, TColumnKey>>((M0[])new Frame<TRowKey, TColumnKey>[1]
+            Frame<TRowKey, TColumnKey>[] frameArray1 = (Frame<TRowKey, TColumnKey>[])ArrayModule.Append<Frame<TRowKey, TColumnKey>>(new Frame<TRowKey, TColumnKey>[1]
             {
-        this
-            }, (M0[])otherFrames);
+                this
+            }, otherFrames);
             Tuple<IIndex<TRowKey>, VectorConstruction> tuple1 = this.indexBuilder.Merge<TRowKey>((FSharpList<Tuple<IIndex<TRowKey>, VectorConstruction>>)ListModule.OfSeq<Tuple<IIndex<TRowKey>, VectorConstruction>>((IEnumerable<M0>)SeqModule.MapIndexed<Frame<TRowKey, TColumnKey>, Tuple<IIndex<TRowKey>, VectorConstruction>>((FSharpFunc<int, FSharpFunc<M0, M1>>)new Frame.constrs<TRowKey, TColumnKey>(), (IEnumerable<M0>)frameArray1)), VectorHelpers.NaryTransform.AtMostOne);
             VectorConstruction rowCmd = tuple1.Item2;
             IIndex<TRowKey> index1 = tuple1.Item1;
@@ -508,13 +508,13 @@ namespace Deedle
         public Frame<TRowKey, TColumnKey> ColumnApply<T>(ConversionKind conversionKind, Func<Series<TRowKey, T>, ISeries<TRowKey>> f)
         {
             ColumnSeries<TRowKey, TColumnKey> columns = this.Columns;
-            return Frame<TRowKey, TColumnKey>.fromColumnsNonGeneric<ISeries<TRowKey>, TRowKey, TColumnKey>(this.indexBuilder, this.vectorBuilder, (FSharpFunc<ISeries<TRowKey>, ISeries<TRowKey>>)new Frame.ColumnApply<TRowKey>(), SeriesModule.MapValues<ObjectSeries<TRowKey>, ISeries<TRowKey>, TColumnKey>((FSharpFunc<ObjectSeries<TRowKey>, ISeries<TRowKey>>)new Frame.ColumnApply<TRowKey, T>(conversionKind, f), (Series<TColumnKey, ObjectSeries<TRowKey>>)columns));
+            return Frame<TRowKey, TColumnKey>.fromColumnsNonGeneric<ISeries<TRowKey>, TRowKey, TColumnKey>(this.indexBuilder, this.vectorBuilder, (Func<ISeries<TRowKey>, ISeries<TRowKey>>)new Frame.ColumnApply<TRowKey>(), SeriesModule.MapValues<ObjectSeries<TRowKey>, ISeries<TRowKey>, TColumnKey>((Func<ObjectSeries<TRowKey>, ISeries<TRowKey>>)new Frame.ColumnApply<TRowKey, T>(conversionKind, f), (Series<TColumnKey, ObjectSeries<TRowKey>>)columns));
         }
 
         public Frame<TRowKey, TColumnKey> Select<T1, T2>(Func<TRowKey, TColumnKey, T1, T2> f)
         {
             ColumnSeries<TRowKey, TColumnKey> columns = this.Columns;
-            return Frame<TRowKey, TColumnKey>.fromColumnsNonGeneric<ISeries<TRowKey>, TRowKey, TColumnKey>(this.indexBuilder, this.vectorBuilder, (FSharpFunc<ISeries<TRowKey>, ISeries<TRowKey>>)new Frame.Select<TRowKey>(), SeriesModule.Map<TColumnKey, ObjectSeries<TRowKey>, ISeries<TRowKey>>((FSharpFunc<TColumnKey, FSharpFunc<ObjectSeries<TRowKey>, ISeries<TRowKey>>>)new Frame.Select<TRowKey, TColumnKey, T1, T2>(f), (Series<TColumnKey, ObjectSeries<TRowKey>>)columns));
+            return Frame<TRowKey, TColumnKey>.fromColumnsNonGeneric<ISeries<TRowKey>, TRowKey, TColumnKey>(this.indexBuilder, this.vectorBuilder, (Func<ISeries<TRowKey>, ISeries<TRowKey>>)new Frame.Select<TRowKey>(), SeriesModule.Map<TColumnKey, ObjectSeries<TRowKey>, ISeries<TRowKey>>((Func<TColumnKey, Func<ObjectSeries<TRowKey>, ISeries<TRowKey>>>)new Frame.Select<TRowKey, TColumnKey, T1, T2>(f), (Series<TColumnKey, ObjectSeries<TRowKey>>)columns));
         }
 
         public Frame<TRowKey, TColumnKey> SelectValues<T1, T2>(Func<T1, T2> f)
@@ -523,14 +523,14 @@ namespace Deedle
         }
 
         [SpecialName]
-        public static Frame<TRowKey, TColumnKey> op_Dollar<a, b>(FSharpFunc<a, b> f, Frame<TRowKey, TColumnKey> frame)
+        public static Frame<TRowKey, TColumnKey> op_Dollar<a, b>(Func<a, b> f, Frame<TRowKey, TColumnKey> frame)
         {
             return frame.SelectValues<a, b>(new Func<a, b>(new Frame.op_Dollar<a, b>(f).Invoke));
         }
 
         public Series<TRowKey, R> GetColumn<R>(TColumnKey column, Lookup lookup)
         {
-            IVector colVector = this.safeGetColVector(column, lookup, (FSharpFunc<long, bool>)new Frame.GetColumn());
+            IVector colVector = this.safeGetColVector(column, lookup, (Func<long, bool>)new Frame.GetColumn());
             VectorHelpers.IBoxedVector boxedVector = colVector as VectorHelpers.IBoxedVector;
             IVector vector1 = boxedVector == null ? colVector : boxedVector.UnboxedVector;
             IVector<R> vector2 = vector1 as IVector<R>;
@@ -584,9 +584,13 @@ namespace Deedle
 
         public void RenameColumns(IEnumerable<TColumnKey> columnKeys)
         {
-            if (SeqModule.Length<TColumnKey>((IEnumerable<M0>)this.columnIndex.Keys) != SeqModule.Length<TColumnKey>((IEnumerable<M0>)columnKeys))
+            if(columnIndex.Keys.Count != columnKeys.Count())
+            {
                 throw new ArgumentException("The number of new column keys does not match with the number of columns", nameof(columnKeys));
-            this.setColumnIndex(FIndexextensions.Index.ofKeys<TColumnKey>(System.Array.AsReadOnly<TColumnKey>((TColumnKey[])ArrayModule.OfSeq<TColumnKey>((IEnumerable<M0>)columnKeys))));
+            }
+
+            this.setColumnIndex(
+                Index.ofKeys<TColumnKey>(System.Array.AsReadOnly<TColumnKey>(ArrayModule.OfSeq<TColumnKey>(columnKeys))));
         }
 
         public void RenameColumn(TColumnKey oldKey, TColumnKey newKey)
@@ -597,12 +601,14 @@ namespace Deedle
 
         public void RenameColumns(Func<TColumnKey, TColumnKey> mapping)
         {
-            FSharpFunc<TColumnKey, TColumnKey> fsharpFunc = (FSharpFunc<TColumnKey, TColumnKey>)new Frame.RenameColumns<TColumnKey>(mapping);
+            Func<TColumnKey, TColumnKey> fsharpFunc = mapping;
             ReadOnlyCollection<TColumnKey> keys = this.columnIndex.Keys;
+            
             TColumnKey[] array = (TColumnKey[])ArrayModule.ZeroCreate<TColumnKey>(keys.Count);
-            Frame<TRowKey, TColumnKey> frame = this;
+
             int index = 0;
             int num = keys.Count - 1;
+
             if (num >= index)
             {
                 do
@@ -612,7 +618,8 @@ namespace Deedle
                 }
                 while (index != num + 1);
             }
-            frame.setColumnIndex(FIndexextensions.Index.ofKeys<TColumnKey>(System.Array.AsReadOnly<TColumnKey>(array)));
+
+            setColumnIndex(IndexHelpers.ofKeys<TColumnKey>(System.Array.AsReadOnly<TColumnKey>(array)));
         }
 
         [SpecialName]

@@ -38,7 +38,7 @@ namespace Deedle.Indices
         /// if the index keys are ordered or not. When the value is not set, the construction
         /// should check and infer this from the data.
         ///</summary> 
-        IIndex<K> Create<K>([In] IEnumerable<K> sequence, bool ordered);
+        IIndex<K> Create<K>([In] IEnumerable<K> sequence, bool? ordered);
 
         ///<summary>   
         /// Create a new index using the specified keys. This overload takes data as ReadOnlyCollection
